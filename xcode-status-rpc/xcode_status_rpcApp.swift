@@ -9,9 +9,18 @@ import SwiftUI
 
 @main
 struct xcode_status_rpcApp: App {
+    private let monitor = XcodeMonitor()
+
+    init() {
+        monitor.start()
+    }
+
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        // Background-only app: no WindowGroup, so no window opens at launch.
+        // Settings scene satisfies SwiftUI's "at least one scene" requirement
+        // without showing anything.
+        Settings {
+            EmptyView()
         }
     }
 }
