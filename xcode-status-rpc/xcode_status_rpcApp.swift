@@ -10,10 +10,18 @@ import SwiftUI
 @main
 struct xcode_status_rpcApp: App {
     private let monitor = XcodeMonitor()
+    private let discord = DiscordIPC()
 
     init() {
         XcodeMonitor.ensureAccessibilityPermission()
         monitor.start()
+
+        do {
+            try discord.connect()
+            try discord.handshake()
+        } catch {
+            print("[DiscordIPC] handshake failed: \(error)")
+        }
     }
 
     var body: some Scene {
